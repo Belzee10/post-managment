@@ -1,5 +1,7 @@
 import React from "react";
 
+import Button from "./Button";
+
 /**
  * @description render all Object values in a <td> tag
  * @param {Object} obj
@@ -30,6 +32,14 @@ const Table = props => {
           <tr key={index}>
             <td>{index}</td>
             {renderValues(item)}
+            <td>
+              <Button type="warning" size="sm" outline>
+                Edit
+              </Button>
+              <Button type="danger" size="sm" outline>
+                Delete
+              </Button>
+            </td>
           </tr>
         ))}
       </tbody>
