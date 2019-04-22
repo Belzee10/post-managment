@@ -1,0 +1,17 @@
+html,
+body,
+#root,
+.main {
+  height: 100%;
+}
+
+.main {
+  background-color: #25262e;
+  color: #ffffff;
+  padding-top: 5rem;
+}
+
+.card {
+  color: #25262e;
+  margin-top: 1rem;
+}
