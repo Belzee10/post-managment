@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Button from "./Button";
 
@@ -33,7 +34,7 @@ const Table = props => {
             <td>{index}</td>
             {renderValues(item)}
             <td>
-              <Button type="warning" size="sm" outline>
+              <Button className="mr-1" type="warning" size="sm" outline>
                 Edit
               </Button>
               <Button type="danger" size="sm" outline>
@@ -45,6 +46,24 @@ const Table = props => {
       </tbody>
     </table>
   );
+};
+
+Table.propTypes = {
+  type: PropTypes.oneOf([
+    "",
+    "dark",
+    "striped",
+    "bordered",
+    "borderless",
+    "hover",
+    "sm"
+  ]),
+  data: PropTypes.arrayOf(PropTypes.object)
+};
+
+Table.defaultProps = {
+  type: "",
+  data: []
 };
 
 export default Table;

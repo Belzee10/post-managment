@@ -5,6 +5,7 @@ import URL_API from "./env";
 import Title from "./components/Title";
 import Table from "./components/Table";
 import Alert from "./components/Alert";
+import Button from "./components/Button";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -45,13 +46,16 @@ const App = () => {
             <div className="card">
               <div className="card-body">
                 {isError ? (
-                  <Alert type="danger">
-                    That was an error fetching your data :(
-                  </Alert>
+                  <Alert>That was an error fetching your data :(</Alert>
                 ) : isLoading || !posts.length ? (
                   <span>loading...</span>
                 ) : (
-                  <Table data={posts} />
+                  <>
+                    <Button className="mb-3" type="primary" size="sm">
+                      Create
+                    </Button>
+                    <Table data={posts} />
+                  </>
                 )}
               </div>
             </div>
