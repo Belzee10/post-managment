@@ -7,12 +7,23 @@ import Table from "./components/Table";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsError(false);
+    setIsLoading(true);
     fetch(`${URL_API}/posts`)
       .then(resp => resp.json())
-      .then(res => setPosts(res))
-      .catch(err => console.log(err));
+      .then(res => {
+        setPosts(res);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setIsLoading(false);
+        setIsError(true);
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -32,7 +43,11 @@ const App = () => {
           <div className="col">
             <div className="card">
               <div className="card-body">
-                {posts.length ? <Table data={posts} /> : <span>loading</span>}
+                {isLoading || !posts.length ? (
+                  <span>loading...</span>
+                ) : (
+                  <Table data={posts} />
+                )}
               </div>
             </div>
           </div>
