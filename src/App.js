@@ -4,6 +4,7 @@ import URL_API from "./env";
 
 import Title from "./components/Title";
 import Table from "./components/Table";
+import Alert from "./components/Alert";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -43,7 +44,11 @@ const App = () => {
           <div className="col">
             <div className="card">
               <div className="card-body">
-                {isLoading || !posts.length ? (
+                {isError ? (
+                  <Alert type="danger">
+                    That was an error fetching your data :(
+                  </Alert>
+                ) : isLoading || !posts.length ? (
                   <span>loading...</span>
                 ) : (
                   <Table data={posts} />
