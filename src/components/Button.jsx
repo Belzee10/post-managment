@@ -8,9 +8,10 @@ import PropTypes from "prop-types";
 const outlineClass = type => `btn-outline-${type}`;
 
 const Button = props => {
-  const { type, size, outline, children, className } = props;
+  const { type, size, outline, children, className, onClick } = props;
   return (
     <button
+      onClick={onClick}
       className={`${className} btn btn-${type} btn-${size} ${
         outline ? outlineClass(type) : ""
       }`}
@@ -37,7 +38,8 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  className: PropTypes.string
+  className: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 Button.defaultProps = {
@@ -45,7 +47,8 @@ Button.defaultProps = {
   size: "",
   outline: false,
   children: null,
-  className: ""
+  className: "",
+  onClick: () => {}
 };
 
 export default Button;

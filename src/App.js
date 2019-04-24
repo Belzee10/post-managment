@@ -6,11 +6,26 @@ import Title from "./components/Title";
 import Table from "./components/Table";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
+import Form from "./components/Form";
+
+const formFields = [
+  {
+    name: "title",
+    type: "input",
+    placeholder: "Enter title"
+  },
+  {
+    name: "author",
+    type: "input",
+    placeholder: "Enter author"
+  }
+];
 
 const App = () => {
   const [posts, setPosts] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCreatePost, setShowCreatePost] = useState(false);
 
   useEffect(() => {
     setIsError(false);
@@ -27,6 +42,10 @@ const App = () => {
         console.log(err);
       });
   }, []);
+
+  const handleShowCreatePost = () => {
+    setShowCreatePost(!showCreatePost);
+  };
 
   return (
     <div className="main">
@@ -51,9 +70,18 @@ const App = () => {
                   <span>loading...</span>
                 ) : (
                   <>
-                    <Button className="mb-3" type="primary" size="sm">
-                      Create
-                    </Button>
+                    {showCreatePost ? (
+                      <Form title="Create a prost" fields={formFields} />
+                    ) : (
+                      <Button
+                        onClick={handleShowCreatePost}
+                        className="mb-3"
+                        type="primary"
+                        size="sm"
+                      >
+                        Create
+                      </Button>
+                    )}
                     <Table data={posts} />
                   </>
                 )}
