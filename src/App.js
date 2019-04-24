@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import URL_API from "./env";
+
 import Title from "./components/Title";
 import Table from "./components/Table";
 
@@ -7,7 +9,7 @@ const App = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/posts")
+    fetch(`${URL_API}/posts`)
       .then(resp => resp.json())
       .then(res => setPosts(res))
       .catch(err => console.log(err));
