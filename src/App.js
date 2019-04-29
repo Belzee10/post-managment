@@ -41,7 +41,7 @@ const App = () => {
       .catch(err => {
         setIsLoading(false);
         setIsError(true);
-        console.log(err);
+        console.log(`Error fetching data: ${err}`);
       });
   }, []);
 
@@ -50,7 +50,18 @@ const App = () => {
   };
 
   const handleCreatePost = data => {
-    console.log(data);
+    fetch(`${URL_API}/posts`, {
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+      .then(resp => resp.json())
+      .then(res => {
+        setPosts([res, ...posts]);
+      })
+      .catch(err => console.log(`Error posting data: ${data}`));
   };
 
   return (

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Alert = props => {
   const { children, type } = props;
   return (
-    <div class={`alert alert-${type}`} role="alert">
+    <div className={`alert alert-${type}`} role="alert">
       {children}
     </div>
   );

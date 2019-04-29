@@ -52,8 +52,12 @@ const Form = props => {
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    // console.log(fieldValues);
-    onSubmit(fieldValues);
+    const newFormValue = {};
+    for (const field of fieldValues) {
+      newFormValue[field.name] = field.value;
+    }
+    clearFieldValues();
+    onSubmit(newFormValue);
   };
 
   const clearFieldValues = () => {
