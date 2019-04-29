@@ -12,12 +12,14 @@ const formFields = [
   {
     name: "title",
     type: "input",
-    placeholder: "Enter title"
+    placeholder: "Enter title",
+    value: ""
   },
   {
     name: "author",
     type: "input",
-    placeholder: "Enter author"
+    placeholder: "Enter author",
+    value: ""
   }
 ];
 
@@ -71,7 +73,11 @@ const App = () => {
                 ) : (
                   <>
                     {showCreatePost ? (
-                      <Form title="Create a prost" fields={formFields} />
+                      <Form
+                        title="Create a prost"
+                        fields={formFields}
+                        onCancel={handleShowCreatePost}
+                      />
                     ) : (
                       <Button
                         onClick={handleShowCreatePost}

@@ -1,34 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { capitalize } from "../utils";
 
 import Title from "./Title";
 import Button from "./Button";
 
 /**
- * @description Capitalize an String
- * @param {String} str
- */
-const capitalize = str =>
-  str.charAt(0).toUpperCase() + str.slice(1, str.lentgh);
-
-/**
  * @description Render form fields based on an array of objects
  * @param {Array} fields
+ * @param {String} fieldValue
+ * @param {Function} onChangeField
  */
-const renderFields = (fields, fieldValue, onChangeField) => {
+const renderFields = (fields, onChangeField) => {
   return fields.map((field, index) => {
-    const Type = field.type;
+    const { name, type, placeholder, value } = field;
+    const Type = type;
     return (
-      <div key={field.name} className="form-group">
-        <label htmlFor={`${field.name}-${index}`}>
-          {capitalize(field.name)}
-        </label>
+      <div key={name} className="form-group">
+        <label htmlFor={`${name}-${index}`}>{capitalize(name)}</label>
         <Type
-          value={fieldValue}
-          onChange={onChangeField}
+          value={value}
+          onChange={e => onChangeField(e, index)}
           type="text"
           className="form-control form-control-sm"
-          id={`${field.name}-${index}`}
-          placeholder={field.placeholder}
+          id={`${name}-${index}`}
+          placeholder={placeholder}
         />
       </div>
     );
@@ -36,24 +31,44 @@ const renderFields = (fields, fieldValue, onChangeField) => {
 };
 
 const Form = props => {
-  const [fieldValue, setFieldValue] = useState("");
+  const { title, fields, onCancel, onSubmit } = props;
 
-  const handleOnFieldChange = e => {
-    setFieldValue(e.target.value);
-    console.log("changing...", e.target.value);
+  const [fieldValues, setFieldValues] = useState(fields);
+
+  useEffect(() => {
+    return clearFieldValues();
+  }, []);
+
+  const handleOnFieldChange = (e, index) => {
+    const newFieldValues = [...fieldValues];
+    newFieldValues[index].value = e.target.value;
+    setFieldValues(newFieldValues);
   };
 
-  const { title, fields } = props;
+  const handleOnCancel = e => {
+    e.preventDefault();
+    onCancel();
+  };
+
+  const clearFieldValues = () => {
+    const newFieldValues = fieldValues.map(field => {
+      field.value = "";
+      return field;
+    });
+    setFieldValues(newFieldValues);
+  };
+
   return (
     <div className="row">
       <div className="col-md-4">
-        <div className="form">
+        <div className="form bg-light border p-2 mb-2">
           <Title type="h5">{title}</Title>
           <form>
-            {fields.length &&
-              renderFields(fields, fieldValue, handleOnFieldChange)}
-            <Button size="sm">Save</Button>
-            <Button type="secondary" size="sm">
+            {fields.length && renderFields(fields, handleOnFieldChange)}
+            <Button className="mr-1" size="sm">
+              Save
+            </Button>
+            <Button onClick={handleOnCancel} type="secondary" size="sm">
               Cancel
             </Button>
           </form>
