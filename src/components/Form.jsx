@@ -50,6 +50,12 @@ const Form = props => {
     onCancel();
   };
 
+  const handleOnSubmit = e => {
+    e.preventDefault();
+    // console.log(fieldValues);
+    onSubmit(fieldValues);
+  };
+
   const clearFieldValues = () => {
     const newFieldValues = fieldValues.map(field => {
       field.value = "";
@@ -65,7 +71,7 @@ const Form = props => {
           <Title type="h5">{title}</Title>
           <form>
             {fields.length && renderFields(fields, handleOnFieldChange)}
-            <Button className="mr-1" size="sm">
+            <Button onClick={handleOnSubmit} className="mr-1" size="sm">
               Save
             </Button>
             <Button onClick={handleOnCancel} type="secondary" size="sm">

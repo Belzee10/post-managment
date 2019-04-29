@@ -8,7 +8,7 @@ import Alert from "./components/Alert";
 import Button from "./components/Button";
 import Form from "./components/Form";
 
-const formFields = [
+const createFormFields = [
   {
     name: "title",
     type: "input",
@@ -49,6 +49,10 @@ const App = () => {
     setShowCreatePost(!showCreatePost);
   };
 
+  const handleCreatePost = data => {
+    console.log(data);
+  };
+
   return (
     <div className="main">
       <div className="container">
@@ -68,15 +72,16 @@ const App = () => {
               <div className="card-body">
                 {isError ? (
                   <Alert>That was an error fetching your data :(</Alert>
-                ) : isLoading || !posts.length ? (
+                ) : isLoading ? (
                   <span>loading...</span>
                 ) : (
                   <>
                     {showCreatePost ? (
                       <Form
                         title="Create a prost"
-                        fields={formFields}
+                        fields={createFormFields}
                         onCancel={handleShowCreatePost}
+                        onSubmit={handleCreatePost}
                       />
                     ) : (
                       <Button
