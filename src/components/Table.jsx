@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Button from "./Button";
+import Alert from "./Alert";
 
 /**
  * @description render all Object values in a <td> tag
@@ -19,7 +20,7 @@ const renderKeys = obj =>
 
 const Table = props => {
   const { type, data } = props;
-  return (
+  return data.length ? (
     <table className={`table table-${type}`}>
       <thead>
         <tr>
@@ -45,6 +46,8 @@ const Table = props => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <Alert type="secondary">No Posts to show :(</Alert>
   );
 };
 
