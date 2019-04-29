@@ -29,6 +29,8 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showCreatePost, setShowCreatePost] = useState(false);
 
+  //TODO try to make a custom Hook to handle API calls
+
   useEffect(() => {
     setIsError(false);
     setIsLoading(true);
@@ -61,7 +63,19 @@ const App = () => {
       .then(res => {
         setPosts([res, ...posts]);
       })
-      .catch(err => console.log(`Error posting data: ${data}`));
+      .catch(err => console.log(`Error posting data: ${err}`));
+  };
+
+  const handleOnDelete = id => {
+    fetch(`${URL_API}/posts/${id}`, {
+      method: "DELETE"
+    })
+      .then(resp => resp.json())
+      .then(res => {
+        const newPosts = posts.filter(post => post.id !== id);
+        setPosts(newPosts);
+      })
+      .catch(err => console.log(`Error deleting data: ${err}`));
   };
 
   return (
@@ -104,7 +118,7 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    <Table data={posts} />
+                    <Table data={posts} onDeleteItem={handleOnDelete} />
                   </>
                 )}
               </div>

@@ -1,32 +1,14 @@
 {
   "posts": [
     {
-      "title": "sf",
-      "author": "sf",
+      "title": "react",
+      "author": "ivan",
       "id": 1
     },
     {
+      "title": "css",
+      "author": "albert",
       "id": 2
-    },
-    {
-      "title": "hey",
-      "author": "hey",
-      "id": 3
-    },
-    {
-      "title": "yyyyy",
-      "author": "yyyyyyy",
-      "id": 4
-    },
-    {
-      "title": "1111",
-      "author": "21111",
-      "id": 5
-    },
-    {
-      "title": "dbds",
-      "author": "ndsnbf",
-      "id": 6
     }
   ],
   "comments": [],

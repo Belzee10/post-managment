@@ -19,7 +19,7 @@ const renderKeys = obj =>
   Object.keys(obj).map((key, index) => <th key={index}>{key}</th>);
 
 const Table = props => {
-  const { type, data } = props;
+  const { type, data, onDeleteItem } = props;
   return data.length ? (
     <table className={`table table-${type}`}>
       <thead>
@@ -38,7 +38,12 @@ const Table = props => {
               <Button className="mr-1" type="warning" size="sm" outline>
                 Edit
               </Button>
-              <Button type="danger" size="sm" outline>
+              <Button
+                onClick={() => onDeleteItem(item.id)}
+                type="danger"
+                size="sm"
+                outline
+              >
                 Delete
               </Button>
             </td>
