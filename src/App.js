@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useDataApi from "./hooks";
 
 import URL_API from "./env";
 
@@ -24,58 +25,43 @@ const createFormFields = [
 ];
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const { data, isLoading, isError, doFetch } = useDataApi(
+    `${URL_API}/posts`,
+    []
+  );
 
   //TODO try to make a custom Hook to handle API calls
-
-  useEffect(() => {
-    setIsError(false);
-    setIsLoading(true);
-    fetch(`${URL_API}/posts`)
-      .then(resp => resp.json())
-      .then(res => {
-        setPosts(res);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        setIsLoading(false);
-        setIsError(true);
-        console.log(`Error fetching data: ${err}`);
-      });
-  }, []);
 
   const handleShowCreatePost = () => {
     setShowCreatePost(!showCreatePost);
   };
 
   const handleCreatePost = data => {
-    fetch(`${URL_API}/posts`, {
-      headers: new Headers({
-        "Content-Type": "application/json"
-      }),
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(resp => resp.json())
-      .then(res => {
-        setPosts([res, ...posts]);
-      })
-      .catch(err => console.log(`Error posting data: ${err}`));
+    // fetch(`${URL_API}/posts`, {
+    //   headers: new Headers({
+    //     "Content-Type": "application/json"
+    //   }),
+    //   method: "POST",
+    //   body: JSON.stringify(data)
+    // })
+    //   .then(resp => resp.json())
+    //   .then(res => {
+    //     setPosts([res, ...posts]);
+    //   })
+    //   .catch(err => console.log(`Error posting data: ${err}`));
   };
 
   const handleOnDelete = id => {
-    fetch(`${URL_API}/posts/${id}`, {
-      method: "DELETE"
-    })
-      .then(resp => resp.json())
-      .then(res => {
-        const newPosts = posts.filter(post => post.id !== id);
-        setPosts(newPosts);
-      })
-      .catch(err => console.log(`Error deleting data: ${err}`));
+    // fetch(`${URL_API}/posts/${id}`, {
+    //   method: "DELETE"
+    // })
+    //   .then(resp => resp.json())
+    //   .then(res => {
+    //     const newPosts = posts.filter(post => post.id !== id);
+    //     setPosts(newPosts);
+    //   })
+    //   .catch(err => console.log(`Error deleting data: ${err}`));
   };
 
   return (
@@ -118,7 +104,7 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    <Table data={posts} onDeleteItem={handleOnDelete} />
+                    <Table data={data} onDeleteItem={handleOnDelete} />
                   </>
                 )}
               </div>
