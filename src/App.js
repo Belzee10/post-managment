@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useDataApi from "./hooks";
 
 import URL_API from "./env";
@@ -28,40 +28,20 @@ const App = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
   const { data, isLoading, isError, doFetch } = useDataApi(
     `${URL_API}/posts`,
+    `GET`,
     []
   );
-
-  //TODO try to make a custom Hook to handle API calls
 
   const handleShowCreatePost = () => {
     setShowCreatePost(!showCreatePost);
   };
 
   const handleCreatePost = data => {
-    // fetch(`${URL_API}/posts`, {
-    //   headers: new Headers({
-    //     "Content-Type": "application/json"
-    //   }),
-    //   method: "POST",
-    //   body: JSON.stringify(data)
-    // })
-    //   .then(resp => resp.json())
-    //   .then(res => {
-    //     setPosts([res, ...posts]);
-    //   })
-    //   .catch(err => console.log(`Error posting data: ${err}`));
+    doFetch(`${URL_API}/posts`, `POST`, data);
   };
 
   const handleOnDelete = id => {
-    // fetch(`${URL_API}/posts/${id}`, {
-    //   method: "DELETE"
-    // })
-    //   .then(resp => resp.json())
-    //   .then(res => {
-    //     const newPosts = posts.filter(post => post.id !== id);
-    //     setPosts(newPosts);
-    //   })
-    //   .catch(err => console.log(`Error deleting data: ${err}`));
+    doFetch(`${URL_API}/posts/${id}`, "DELETE", null, id);
   };
 
   return (
