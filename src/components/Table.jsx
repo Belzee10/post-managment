@@ -31,7 +31,7 @@ const Table = props => {
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <tr key={index}>
+          <tr key={item.id}>
             <td>{index}</td>
             {renderValues(item)}
             <td>

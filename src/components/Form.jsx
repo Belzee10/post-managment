@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { capitalize } from "../utils";
 
 import Title from "./Title";
@@ -10,7 +10,7 @@ import Button from "./Button";
  * @param {String} fieldValue
  * @param {Function} onChangeField
  */
-const renderFields = (fields, onChangeField) => {
+const renderFields = (fields, onChangeField, refElem) => {
   return fields.map((field, index) => {
     const { name, type, placeholder, value } = field;
     const Type = type;
@@ -18,6 +18,7 @@ const renderFields = (fields, onChangeField) => {
       <div key={name} className="form-group">
         <label htmlFor={`${name}-${index}`}>{capitalize(name)}</label>
         <Type
+          ref={index === 0 ? refElem : null}
           value={value}
           onChange={e => onChangeField(e, index)}
           type="text"
@@ -35,7 +36,10 @@ const Form = props => {
 
   const [fieldValues, setFieldValues] = useState(fields);
 
+  const inputEl = useRef(null);
+
   useEffect(() => {
+    inputEl.current.focus(); // focus the first form input
     return clearFieldValues();
   }, []);
 
@@ -74,7 +78,8 @@ const Form = props => {
         <div className="form bg-light border p-2 mb-2">
           <Title type="h5">{title}</Title>
           <form>
-            {fields.length && renderFields(fields, handleOnFieldChange)}
+            {fields.length &&
+              renderFields(fields, handleOnFieldChange, inputEl)}
             <Button onClick={handleOnSubmit} className="mr-1" size="sm">
               Save
             </Button>
