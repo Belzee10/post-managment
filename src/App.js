@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useDataApi from "./hooks";
 
 import URL_API from "./env";
@@ -26,22 +26,22 @@ const createFormFields = [
 
 const App = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
-  const { data, isLoading, isError, doFetch } = useDataApi(
-    `${URL_API}/posts`,
-    `GET`,
-    []
-  );
+  const { data, isLoading, isError, doGet, doPost, doDelete } = useDataApi([]);
+
+  useEffect(() => {
+    doGet(`${URL_API}/posts`);
+  }, []);
 
   const handleShowCreatePost = () => {
     setShowCreatePost(!showCreatePost);
   };
 
   const handleCreatePost = data => {
-    doFetch(`${URL_API}/posts`, `POST`, data);
+    doPost(`${URL_API}/posts`, data);
   };
 
   const handleOnDelete = id => {
-    doFetch(`${URL_API}/posts/${id}`, "DELETE", null, id);
+    doDelete(`${URL_API}/posts/${id}`, id);
   };
 
   return (
