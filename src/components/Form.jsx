@@ -46,18 +46,18 @@ const Form = props => {
   };
 
   const handleOnCancel = e => {
-    e.preventDefault();
     onCancel();
+    e.preventDefault();
   };
 
   const handleOnSubmit = e => {
-    e.preventDefault();
     const newFormValue = {};
     for (const field of fieldValues) {
       newFormValue[field.name] = field.value;
     }
     clearFieldValues();
     onSubmit(newFormValue);
+    e.preventDefault();
   };
 
   const clearFieldValues = () => {

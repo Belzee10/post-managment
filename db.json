@@ -1,26 +1,5 @@
 {
-  "posts": [
-    {
-      "title": "react",
-      "author": "ivan",
-      "id": 1
-    },
-    {
-      "title": "aaa",
-      "author": "aaa",
-      "id": 4
-    },
-    {
-      "title": "sdsd",
-      "author": "dsdsd",
-      "id": 5
-    },
-    {
-      "title": "aa",
-      "author": "aa",
-      "id": 6
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"
