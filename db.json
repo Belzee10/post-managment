@@ -2,9 +2,15 @@
   "posts": [
     {
       "title": "as",
-      "author": "sd",
-      "content": "mdsfn",
-      "id": 2
+      "author": "as",
+      "content": "as\n",
+      "id": 4
+    },
+    {
+      "title": "asd",
+      "author": "axf",
+      "content": "dasdsd",
+      "id": 5
     }
   ],
   "comments": [],
