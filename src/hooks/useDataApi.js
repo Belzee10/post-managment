@@ -2,12 +2,6 @@ import { useReducer } from "react";
 
 const handleDataReducer = (state, action) => {
   switch (action.type) {
-    case "REQUEST_INIT":
-      return {
-        ...state,
-        isLoading: true,
-        isError: false
-      };
     case "REQUEST_SUCCESS":
       return {
         ...state,
@@ -28,13 +22,12 @@ const handleDataReducer = (state, action) => {
 
 const useDataApi = initialData => {
   const [state, dispatch] = useReducer(handleDataReducer, {
-    isLoading: false,
+    isLoading: true,
     isError: false,
     data: initialData
   });
 
   const doGet = url => {
-    dispatch({ type: "REQUEST_INIT" });
     fetch(url)
       .then(resp => resp.json())
       .then(res => {
@@ -47,7 +40,6 @@ const useDataApi = initialData => {
   };
 
   const doPost = (url, body) => {
-    dispatch({ type: "REQUEST_INIT" });
     fetch(url, {
       headers: new Headers({
         "Content-Type": "application/json"
@@ -66,7 +58,6 @@ const useDataApi = initialData => {
   };
 
   const doDelete = (url, itemId) => {
-    dispatch({ type: "REQUEST_INIT" });
     fetch(url, {
       method: "DELETE"
     })

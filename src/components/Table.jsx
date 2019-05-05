@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Button from "./Button";
-import Alert from "./Alert";
 
 /**
  * @description render the table body
@@ -26,7 +25,8 @@ const renderKeys = (obj, exclude) =>
 
 const Table = props => {
   const { type, data, onDeleteItem, excludeFields } = props;
-  return data.length ? (
+
+  return (
     <table className={`table table-${type}`}>
       <thead>
         <tr>
@@ -57,8 +57,6 @@ const Table = props => {
         ))}
       </tbody>
     </table>
-  ) : (
-    <Alert type="secondary">No Posts to show :(</Alert>
   );
 };
 
