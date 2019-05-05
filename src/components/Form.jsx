@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+
 import { capitalize } from "../utils";
 
 import Title from "./Title";
@@ -39,7 +41,7 @@ const Form = props => {
   const inputEl = useRef(null);
 
   useEffect(() => {
-    inputEl.current.focus(); // focus the first form input
+    inputEl.current.focus(); // focus the first form field
     return clearFieldValues();
   }, []);
 
@@ -91,6 +93,20 @@ const Form = props => {
       </div>
     </div>
   );
+};
+
+Form.propTypes = {
+  title: PropTypes.string,
+  onCancel: PropTypes.func,
+  onSubmit: PropTypes.func,
+  fields: PropTypes.arrayOf(PropTypes.object)
+};
+
+Form.defaultProps = {
+  title: "",
+  onCancel: () => {},
+  onSubmit: () => {},
+  fields: []
 };
 
 export default Form;

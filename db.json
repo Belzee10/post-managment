@@ -1,5 +1,12 @@
 {
-  "posts": [],
+  "posts": [
+    {
+      "title": "as",
+      "author": "sd",
+      "content": "mdsfn",
+      "id": 2
+    }
+  ],
   "comments": [],
   "profile": {
     "name": "typicode"
