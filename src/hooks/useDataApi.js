@@ -16,7 +16,7 @@ const handleDataReducer = (state, action) => {
         isError: true
       };
     default:
-      break;
+      return { ...state };
   }
 };
 
