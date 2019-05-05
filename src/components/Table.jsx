@@ -20,6 +20,7 @@ const renderKeys = obj =>
 
 const Table = props => {
   const { type, data, onDeleteItem } = props;
+  console.log(data);
   return data.length ? (
     <table className={`table table-${type}`}>
       <thead>
@@ -32,7 +33,7 @@ const Table = props => {
       <tbody>
         {data.map((item, index) => (
           <tr key={item.id}>
-            <td>{index}</td>
+            <td style={{ fontWeight: "bold" }}>{index + 1}</td>
             {renderValues(item)}
             <td>
               <Button className="mr-1" type="warning" size="sm" outline>
