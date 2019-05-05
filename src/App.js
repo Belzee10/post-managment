@@ -9,7 +9,7 @@ import Alert from "./components/Alert";
 import Button from "./components/Button";
 import Form from "./components/Form";
 
-const createFormFields = [
+const fields = [
   {
     name: "title",
     type: "input",
@@ -32,6 +32,8 @@ const createFormFields = [
 
 const App = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [itemEditable, setItemEditable] = useState(null);
+  const [formFields, setFormFields] = useState(fields);
   const { data, isLoading, isError, doGet, doPost, doDelete } = useDataApi([]);
 
   useEffect(() => {
@@ -40,6 +42,12 @@ const App = () => {
 
   const handleShowCreatePost = () => {
     setShowCreatePost(!showCreatePost);
+    if (itemEditable) setItemEditable(null);
+  };
+
+  const handleShowEditPost = item => {
+    setItemEditable(item);
+    if (showCreatePost) setShowCreatePost(false);
   };
 
   const handleCreatePost = data => {
@@ -77,7 +85,7 @@ const App = () => {
                     {showCreatePost ? (
                       <Form
                         title="Create a prost"
-                        fields={createFormFields}
+                        fields={formFields}
                         onCancel={handleShowCreatePost}
                         onSubmit={handleCreatePost}
                       />
@@ -91,8 +99,19 @@ const App = () => {
                         Create
                       </Button>
                     )}
+                    {itemEditable && (
+                      <Form
+                        title={`Edit '${itemEditable.title}' post`}
+                        fields={formFields}
+                        onCancel={handleShowEditPost}
+                      />
+                    )}
                     {data.length ? (
-                      <Table data={data} onDeleteItem={handleOnDelete} />
+                      <Table
+                        data={data}
+                        onEditItem={handleShowEditPost}
+                        onDeleteItem={handleOnDelete}
+                      />
                     ) : (
                       <Alert type="secondary">No Posts to show :(</Alert>
                     )}

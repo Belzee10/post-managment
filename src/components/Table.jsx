@@ -24,7 +24,7 @@ const renderKeys = (obj, exclude) =>
   );
 
 const Table = props => {
-  const { type, data, onDeleteItem, excludeFields } = props;
+  const { type, data, onDeleteItem, onEditItem, excludeFields } = props;
 
   return (
     <table className={`table table-${type}`}>
@@ -41,7 +41,13 @@ const Table = props => {
             <td style={{ fontWeight: "bold" }}>{index + 1}</td>
             {renderValues(item, excludeFields)}
             <td>
-              <Button className="mr-1" type="warning" size="sm" outline>
+              <Button
+                onClick={() => onEditItem(item)}
+                className="mr-1"
+                type="warning"
+                size="sm"
+                outline
+              >
                 Edit
               </Button>
               <Button
@@ -71,13 +77,17 @@ Table.propTypes = {
     "sm"
   ]),
   data: PropTypes.arrayOf(PropTypes.object),
-  excludeFields: PropTypes.arrayOf(PropTypes.string)
+  excludeFields: PropTypes.arrayOf(PropTypes.string),
+  onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func
 };
 
 Table.defaultProps = {
   type: "",
   data: [],
-  excludeFields: ["id"]
+  excludeFields: ["id"],
+  onDeleteItem: () => {},
+  onEditItem: () => {}
 };
 
 export default Table;
