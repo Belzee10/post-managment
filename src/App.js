@@ -67,9 +67,10 @@ const App = () => {
           <div className="col">
             <div className="card">
               <div className="card-body">
-                {isError ? (
+                {isError && (
                   <Alert>That was an error fetching your data :(</Alert>
-                ) : isLoading ? (
+                )}
+                {isLoading ? (
                   <span>loading...</span>
                 ) : (
                   <>
@@ -90,7 +91,11 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    <Table data={data} onDeleteItem={handleOnDelete} />
+                    {data.length ? (
+                      <Table data={data} onDeleteItem={handleOnDelete} />
+                    ) : (
+                      <Alert type="secondary">No Posts to show :(</Alert>
+                    )}
                   </>
                 )}
               </div>
