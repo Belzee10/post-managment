@@ -38,6 +38,8 @@ const Form = props => {
 
   const [fieldValues, setFieldValues] = useState(fields);
 
+  console.log(fieldValues);
+
   const inputEl = useRef(null);
 
   useEffect(() => {

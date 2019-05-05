@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import useDataApi from "./hooks";
+import { useDataApi, useFormFields } from "./hooks";
 
 import URL_API from "./env";
+import { postFormFields } from "./utils";
 
 import Title from "./components/Title";
 import Table from "./components/Table";
@@ -9,36 +10,25 @@ import Alert from "./components/Alert";
 import Button from "./components/Button";
 import Form from "./components/Form";
 
-const fields = [
-  {
-    name: "title",
-    type: "input",
-    placeholder: "Enter title",
-    value: ""
-  },
-  {
-    name: "author",
-    type: "input",
-    placeholder: "Enter author",
-    value: ""
-  },
-  {
-    name: "content",
-    type: "textarea",
-    placeholder: "Content here",
-    value: ""
-  }
-];
-
 const App = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
+
   const [itemEditable, setItemEditable] = useState(null);
-  const [formFields, setFormFields] = useState(fields);
+
   const { data, isLoading, isError, doGet, doPost, doDelete } = useDataApi([]);
+
+  const { formFields, setFormFields } = useFormFields(postFormFields);
+
+  // console.log(formFields);
 
   useEffect(() => {
     doGet(`${URL_API}/posts`);
   }, []);
+
+  useEffect(() => {
+    // console.log("there");
+    if (itemEditable) setFormFields(itemEditable);
+  }, [itemEditable]);
 
   const handleShowCreatePost = () => {
     setShowCreatePost(!showCreatePost);
