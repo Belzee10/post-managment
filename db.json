@@ -1,0 +1,26 @@
+{
+  "posts": [
+    {
+      "title": "react",
+      "author": "ivan",
+      "content": "ivan",
+      "id": 1
+    },
+    {
+      "title": "vue",
+      "author": "ivan",
+      "content": "sn c",
+      "id": 2
+    },
+    {
+      "title": "js",
+      "author": "ivan",
+      "content": "kscjnc",
+      "id": 3
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
