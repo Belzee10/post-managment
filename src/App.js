@@ -19,14 +19,11 @@ const App = () => {
 
   const { formFields, setFormFields } = useFormFields(postFormFields);
 
-  // console.log(formFields);
-
   useEffect(() => {
     doGet(`${URL_API}/posts`);
   }, []);
 
   useEffect(() => {
-    // console.log("there");
     if (itemEditable) setFormFields(itemEditable);
   }, [itemEditable]);
 
@@ -89,13 +86,11 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    {itemEditable && (
-                      <Form
-                        title={`Edit '${itemEditable.title}' post`}
-                        fields={formFields}
-                        onCancel={handleShowEditPost}
-                      />
-                    )}
+                    {/* <Form
+                      title={`Edit '${itemEditable.title}' post`}
+                      fields={formFields}
+                      onCancel={handleShowEditPost}
+                    /> */}
                     {data.length ? (
                       <Table
                         data={data}

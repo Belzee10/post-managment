@@ -17,11 +17,5 @@ export const postFormFields = [
     type: "input",
     placeholder: "Enter author",
     value: ""
-  },
-  {
-    name: "content",
-    type: "textarea",
-    placeholder: "Content here",
-    value: ""
   }
 ];

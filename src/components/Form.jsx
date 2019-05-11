@@ -38,13 +38,11 @@ const Form = props => {
 
   const [fieldValues, setFieldValues] = useState(fields);
 
-  console.log(fieldValues);
-
   const inputEl = useRef(null);
 
   useEffect(() => {
     inputEl.current.focus(); // focus the first form field
-    return clearFieldValues();
+    // return clearFieldValues();
   }, []);
 
   const handleOnFieldChange = (e, index) => {
@@ -82,8 +80,8 @@ const Form = props => {
         <div className="form bg-light border p-2 mb-2">
           <Title type="h5">{title}</Title>
           <form>
-            {fields.length &&
-              renderFields(fields, handleOnFieldChange, inputEl)}
+            {fieldValues.length &&
+              renderFields(fieldValues, handleOnFieldChange, inputEl)}
             <Button onClick={handleOnSubmit} className="mr-1" size="sm">
               Save
             </Button>
