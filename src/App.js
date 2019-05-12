@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDataApi, useFormFields } from "./hooks";
+import { useDataApi, useForm } from "./hooks";
 
 import URL_API from "./env";
 import { postFormFields } from "./utils";
@@ -11,34 +11,30 @@ import Button from "./components/Button";
 import Form from "./components/Form";
 
 const App = () => {
-  const [showCreatePost, setShowCreatePost] = useState(false);
+  const {
+    data,
+    isLoading,
+    isError,
+    doGet,
+    doPost,
+    doPut,
+    doDelete
+  } = useDataApi([]);
 
-  const [itemEditable, setItemEditable] = useState(null);
-
-  const { data, isLoading, isError, doGet, doPost, doDelete } = useDataApi([]);
-
-  const { formFields, setFormFields } = useFormFields(postFormFields);
+  const { formVisible, formFields, itemBeenEdited, setForm } = useForm(
+    postFormFields
+  );
 
   useEffect(() => {
     doGet(`${URL_API}/posts`);
   }, []);
 
-  useEffect(() => {
-    if (itemEditable) setFormFields(itemEditable);
-  }, [itemEditable]);
-
-  const handleShowCreatePost = () => {
-    setShowCreatePost(!showCreatePost);
-    if (itemEditable) setItemEditable(null);
+  const handleCreatePost = body => {
+    doPost(`${URL_API}/posts`, body);
   };
 
-  const handleShowEditPost = item => {
-    setItemEditable(item);
-    if (showCreatePost) setShowCreatePost(false);
-  };
-
-  const handleCreatePost = data => {
-    doPost(`${URL_API}/posts`, data);
+  const handleEditPost = body => {
+    doPut(`${URL_API}/posts/${itemBeenEdited.id}`, body);
   };
 
   const handleOnDelete = id => {
@@ -69,16 +65,16 @@ const App = () => {
                   <span>loading...</span>
                 ) : (
                   <>
-                    {showCreatePost ? (
+                    {formVisible === "CREATE" ? (
                       <Form
                         title="Create a prost"
                         fields={formFields}
-                        onCancel={handleShowCreatePost}
                         onSubmit={handleCreatePost}
+                        // onCancel={handleShowCreatePost}
                       />
                     ) : (
                       <Button
-                        onClick={handleShowCreatePost}
+                        onClick={() => setForm("CREATE")}
                         className="mb-3"
                         type="primary"
                         size="sm"
@@ -86,15 +82,18 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    {/* <Form
-                      title={`Edit '${itemEditable.title}' post`}
-                      fields={formFields}
-                      onCancel={handleShowEditPost}
-                    /> */}
+                    {formVisible === "EDIT" && (
+                      <Form
+                        // title={`Edit '${itemEditable.title}' post`}
+                        fields={formFields}
+                        onSubmit={handleEditPost}
+                        // onCancel={handleShowEditPost}
+                      />
+                    )}
                     {data.length ? (
                       <Table
                         data={data}
-                        onEditItem={handleShowEditPost}
+                        onEditItem={item => setForm("EDIT", item)}
                         onDeleteItem={handleOnDelete}
                       />
                     ) : (

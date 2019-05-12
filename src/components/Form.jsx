@@ -42,7 +42,7 @@ const Form = props => {
 
   useEffect(() => {
     inputEl.current.focus(); // focus the first form field
-    // return clearFieldValues();
+    return () => clearFieldValues();
   }, []);
 
   const handleOnFieldChange = (e, index) => {
@@ -52,18 +52,18 @@ const Form = props => {
   };
 
   const handleOnCancel = e => {
-    onCancel();
     e.preventDefault();
+    onCancel();
   };
 
   const handleOnSubmit = e => {
+    e.preventDefault();
     const newFormValue = {};
     for (const field of fieldValues) {
       newFormValue[field.name] = field.value;
     }
     clearFieldValues();
     onSubmit(newFormValue);
-    e.preventDefault();
   };
 
   const clearFieldValues = () => {

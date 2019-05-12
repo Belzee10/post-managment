@@ -11,11 +11,11 @@ export const postFormFields = [
     type: "input",
     placeholder: "Enter title",
     value: ""
-  },
-  {
-    name: "author",
-    type: "input",
-    placeholder: "Enter author",
-    value: ""
   }
+  // {
+  //   name: "author",
+  //   type: "input",
+  //   placeholder: "Enter author",
+  //   value: ""
+  // }
 ];

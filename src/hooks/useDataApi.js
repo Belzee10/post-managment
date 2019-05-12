@@ -48,12 +48,36 @@ const useDataApi = initialData => {
       body: JSON.stringify(body)
     })
       .then(resp => resp.json())
-      .then(res => {
-        dispatch({ type: "REQUEST_SUCCESS", payload: [res, ...state.data] });
+      .then(newItem => {
+        dispatch({
+          type: "REQUEST_SUCCESS",
+          payload: [newItem, ...state.data]
+        });
       })
       .catch(err => {
         dispatch({ type: "REQUEST_FAILURE" });
-        console.log(`Error fetching data: ${err}`);
+        console.log(`Error posting data: ${err}`);
+      });
+  };
+
+  const doPut = (url, body) => {
+    fetch(url, {
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      method: "PUT",
+      body: JSON.stringify(body)
+    })
+      .then(resp => resp.json())
+      .then(editedItem => {
+        const data = [...state.data];
+        const index = data.findIndex(elem => elem.id === editedItem.id);
+        data.splice(index, 1, editedItem);
+        dispatch({ type: "REQUEST_SUCCESS", payload: data });
+      })
+      .catch(err => {
+        dispatch({ type: "REQUEST_FAILURE" });
+        console.log(`Error puting data: ${err}`);
       });
   };
 
@@ -70,11 +94,11 @@ const useDataApi = initialData => {
       })
       .catch(err => {
         dispatch({ type: "REQUEST_FAILURE" });
-        console.log(`Error fetching data: ${err}`);
+        console.log(`Error deleting data: ${err}`);
       });
   };
 
-  return { ...state, doGet, doPost, doDelete };
+  return { ...state, doGet, doPost, doPut, doDelete };
 };
 
 export default useDataApi;
