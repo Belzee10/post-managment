@@ -65,16 +65,16 @@ const App = () => {
                   <span>loading...</span>
                 ) : (
                   <>
-                    {formVisible === "CREATE" ? (
+                    {formVisible === "CREATE_FORM" ? (
                       <Form
                         title="Create a prost"
                         fields={formFields}
                         onSubmit={handleCreatePost}
-                        onCancel={() => setForm("EMPTY")}
+                        onCancel={() => setForm("EMPTY_FORM")}
                       />
                     ) : (
                       <Button
-                        onClick={() => setForm("CREATE")}
+                        onClick={() => setForm("CREATE_FORM")}
                         className="mb-3"
                         type="primary"
                         size="sm"
@@ -82,19 +82,19 @@ const App = () => {
                         Create
                       </Button>
                     )}
-                    {formVisible === "EDIT" && (
+                    {formVisible === "EDIT_FORM" && (
                       <Form
                         title={`Edit '${itemBeenEdited.title}' post`}
                         fields={formFields}
                         onSubmit={handleEditPost}
-                        onCancel={() => setForm("EMPTY")}
+                        onCancel={() => setForm("EMPTY_FORM")}
                       />
                     )}
                     {data.length ? (
                       <Table
                         data={data}
                         itemBeenEdited={itemBeenEdited}
-                        onEditItem={item => setForm("EDIT", item)}
+                        onEditItem={item => setForm("EDIT_FORM", item)}
                         onDeleteItem={handleOnDelete}
                       />
                     ) : (

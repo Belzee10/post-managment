@@ -2,19 +2,19 @@ import { useReducer } from "react";
 
 const handleFormReducer = (state, action) => {
   switch (action.type) {
-    case "EMPTY":
+    case "EMPTY_FORM":
       return {
         ...state,
         formVisible: "",
         itemBeenEdited: null
       };
-    case "CREATE":
+    case "CREATE_FORM":
       return {
         ...state,
         formVisible: action.type,
         itemBeenEdited: null
       };
-    case "EDIT":
+    case "EDIT_FORM":
       const newFormFields = state.formFields.map(element => {
         return {
           ...element,
