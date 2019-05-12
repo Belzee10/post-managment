@@ -24,7 +24,14 @@ const renderKeys = (obj, exclude) =>
   );
 
 const Table = props => {
-  const { type, data, onDeleteItem, onEditItem, excludeFields } = props;
+  const {
+    type,
+    data,
+    onDeleteItem,
+    onEditItem,
+    excludeFields,
+    itemBeenEdited
+  } = props;
 
   return (
     <table className={`table table-${type}`}>
@@ -32,23 +39,24 @@ const Table = props => {
         <tr>
           <th scope="col">#</th>
           {renderKeys(data[0], excludeFields)}
-          <th>Actions</th>
+          <th className="text-right">Actions</th>
         </tr>
       </thead>
       <tbody>
         {data.map((item, index) => (
           <tr key={item.id}>
-            <td style={{ fontWeight: "bold" }}>{index + 1}</td>
+            <td className="font-weight-bold">{index + 1}</td>
             {renderValues(item, excludeFields)}
-            <td>
+            <td className="text-right">
               <Button
                 onClick={() => onEditItem(item)}
                 className="mr-1"
                 type="warning"
                 size="sm"
-                outline
+                outline={item !== itemBeenEdited}
+                disabled={item === itemBeenEdited}
               >
-                Edit
+                {item === itemBeenEdited ? "Been edited" : "Edit"}
               </Button>
               <Button
                 onClick={() => onDeleteItem(item.id)}
@@ -79,13 +87,15 @@ Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   excludeFields: PropTypes.arrayOf(PropTypes.string),
   onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func
+  onEditItem: PropTypes.func,
+  itemBeenEdited: PropTypes.objectOf(PropTypes.any)
 };
 
 Table.defaultProps = {
   type: "",
   data: [],
   excludeFields: ["id"],
+  itemBeenEdited: {},
   onDeleteItem: () => {},
   onEditItem: () => {}
 };

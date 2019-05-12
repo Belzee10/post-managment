@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDataApi, useForm } from "./hooks";
 
 import URL_API from "./env";
@@ -70,7 +70,7 @@ const App = () => {
                         title="Create a prost"
                         fields={formFields}
                         onSubmit={handleCreatePost}
-                        // onCancel={handleShowCreatePost}
+                        onCancel={() => setForm("EMPTY")}
                       />
                     ) : (
                       <Button
@@ -84,15 +84,16 @@ const App = () => {
                     )}
                     {formVisible === "EDIT" && (
                       <Form
-                        // title={`Edit '${itemEditable.title}' post`}
+                        title={`Edit '${itemBeenEdited.title}' post`}
                         fields={formFields}
                         onSubmit={handleEditPost}
-                        // onCancel={handleShowEditPost}
+                        onCancel={() => setForm("EMPTY")}
                       />
                     )}
                     {data.length ? (
                       <Table
                         data={data}
+                        itemBeenEdited={itemBeenEdited}
                         onEditItem={item => setForm("EDIT", item)}
                         onDeleteItem={handleOnDelete}
                       />

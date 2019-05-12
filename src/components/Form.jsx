@@ -45,6 +45,10 @@ const Form = props => {
     return () => clearFieldValues();
   }, []);
 
+  useEffect(() => {
+    setFieldValues(fields);
+  }, [fields]);
+
   const handleOnFieldChange = (e, index) => {
     const newFieldValues = [...fieldValues];
     newFieldValues[index].value = e.target.value;
